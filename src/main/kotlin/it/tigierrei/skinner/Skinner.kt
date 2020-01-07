@@ -41,9 +41,9 @@ class Skinner : JavaPlugin() {
             server.pluginManager.registerEvents(NPCListener(this), this)
         }
         server.pluginManager.registerEvents(EntityListener(this), this)
-        PacketsListener(this,dataManager,protocolManager)
+        PacketsListener(this, dataManager, protocolManager)
     }
 
-    override fun onDisable(){
+    override fun onDisable() {
     }
 }

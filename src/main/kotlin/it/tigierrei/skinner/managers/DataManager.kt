@@ -17,9 +17,9 @@ class DataManager(pl: Skinner) {
     var mythicMobs: Boolean = false
     var citizens: Boolean = false
     var vanillaMobs: Boolean = false
-    lateinit var mythicMobsDisguiseMap : MutableMap<String, Disguise>
-    lateinit var citizensDisguiseMap : MutableMap<String, Disguise>
-    lateinit var vanillaMobsDisguiseMap : MutableMap<EntityType,Disguise>
+    lateinit var mythicMobsDisguiseMap: MutableMap<String, Disguise>
+    lateinit var citizensDisguiseMap: MutableMap<String, Disguise>
+    lateinit var vanillaMobsDisguiseMap: MutableMap<EntityType, Disguise>
 
     var mythicMobsAlive: MutableMap<Entity, MythicMob> = HashMap()
 
@@ -28,7 +28,7 @@ class DataManager(pl: Skinner) {
         loadConfig()
         //Creates the skins folder if not exists
         val skinsFolder = File("${pl.dataFolder.path}/skins/")
-        if(!skinsFolder.exists()){
+        if (!skinsFolder.exists()) {
             skinsFolder.mkdirs()
         }
     }
@@ -42,39 +42,39 @@ class DataManager(pl: Skinner) {
         mythicMobs = config.get("MythicMobs") as Boolean
         citizens = config.get("Citizens") as Boolean
         vanillaMobs = config.get("VanillaMobs") as Boolean
-        if(mythicMobs){
+        if (mythicMobs) {
             val section = config.getSection("MM-Disguises")
-            for ( x in section.getKeys(false)){
+            for (x in section.getKeys(false)) {
                 val subSection = section.getConfigurationSection(x)
                 if (subSection != null) {
                     val disguise = DisguiseAPI.getCustomDisguise(subSection.get("disguise") as String?)
-                    if(disguise != null) {
+                    if (disguise != null) {
                         mythicMobsDisguiseMap[x] = disguise
                     }
                 }
             }
         }
-        if(citizens){
+        if (citizens) {
             val section = config.getSection("Citizens-Disguises")
-            for ( x in section.getKeys(false)){
+            for (x in section.getKeys(false)) {
                 val subSection = section.getConfigurationSection(x)
                 if (subSection != null) {
                     val disguise = DisguiseAPI.getCustomDisguise(subSection.get("disguise") as String?)
-                    if(disguise != null) {
+                    if (disguise != null) {
                         citizensDisguiseMap[x] = disguise
                     }
                 }
             }
         }
-        if(vanillaMobs){
+        if (vanillaMobs) {
             val section = config.getSection("VanillaMobs-Disguises")
-            for ( x in section.getKeys(false)){
+            for (x in section.getKeys(false)) {
                 val subSection = section.getConfigurationSection(x)
                 if (subSection != null) {
 
                     val disguise = DisguiseAPI.getCustomDisguise(subSection.get("disguise") as String?)
                     val entityType = EntityType.fromName(x)
-                    if(disguise != null && entityType != null) {
+                    if (disguise != null && entityType != null) {
                         vanillaMobsDisguiseMap[entityType] = disguise
                     }
                 }
@@ -83,34 +83,34 @@ class DataManager(pl: Skinner) {
     }
 
     private fun checkIntegrity() {
-        if(config.get("MythicMobs") == null){
-            config.set("MythicMobs",false)
+        if (config.get("MythicMobs") == null) {
+            config.set("MythicMobs", false)
         }
-        if(config.get("Citizens") == null){
+        if (config.get("Citizens") == null) {
             config.set("Citizens", false)
         }
-        if(config.get("VanillaMobs") == null){
+        if (config.get("VanillaMobs") == null) {
             config.set("VanillaMobs", false)
         }
-        if(config.getSection("MM-Disguises") == null){
+        if (config.getSection("MM-Disguises") == null) {
             config.createSection("MM-Disguises")
             val mmSection = config.getSection("MM-Disguises")
             val mmExampleSection = mmSection.createSection("MobInternalNameExample")
-            mmExampleSection.set("disguise","exampleDisguiseName")
+            mmExampleSection.set("disguise", "exampleDisguiseName")
             config.save()
         }
-        if(config.getSection("Citizens-Disguises") == null){
+        if (config.getSection("Citizens-Disguises") == null) {
             config.createSection("Citizens-Disguises")
             val citizenSection = config.getSection("Citizens-Disguises")
             val citizenNPCExample = citizenSection.createSection("ExampleNPCName")
-            citizenNPCExample.set("disguise","exampleDisguiseName")
+            citizenNPCExample.set("disguise", "exampleDisguiseName")
             config.save()
         }
-        if(config.getSection("VanillaMobs-Disguises") == null){
+        if (config.getSection("VanillaMobs-Disguises") == null) {
             config.createSection("VanillaMobs-Disguises")
             val citizenSection = config.getSection("VanillaMobs-Disguises")
             val citizenNPCExample = citizenSection.createSection("CREEPER")
-            citizenNPCExample.set("disguise","exampleDisguiseName")
+            citizenNPCExample.set("disguise", "exampleDisguiseName")
             config.save()
         }
     }

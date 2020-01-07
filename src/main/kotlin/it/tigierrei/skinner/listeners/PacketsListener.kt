@@ -18,16 +18,16 @@ class PacketsListener(val plugin: Skinner, val dataManager: DataManager, val pro
             override fun onPacketSending(event: PacketEvent) {
                 try {
                     if (event.packetType == PacketType.Play.Server.REL_ENTITY_MOVE_LOOK) {
-                        if(event.packet.integers == null || event.packet.integers.size() == 0){
+                        if (event.packet.integers == null || event.packet.integers.size() == 0) {
                             return
                         }
 
                         val entityID = event.packet.integers.read(0)
                         event.isCancelled = false
-                        if(event.player != null && entityID != null){
+                        if (event.player != null && entityID != null) {
                             val iterator = event.player.world.entities.iterator()
 
-                            while(iterator.hasNext()){
+                            while (iterator.hasNext()) {
                                 val entity = iterator.next()
                                 if (entity != null && !entity.isDead) {
                                     if (entity.entityId == entityID) {
@@ -35,7 +35,8 @@ class PacketsListener(val plugin: Skinner, val dataManager: DataManager, val pro
                                             if (dataManager.mythicMobs) {
                                                 if (dataManager.mythicMobsAlive.containsKey(entity)) {
                                                     val mythicMob = dataManager.mythicMobsAlive[entity]
-                                                    val disguise = dataManager.mythicMobsDisguiseMap[mythicMob?.internalName]
+                                                    val disguise =
+                                                        dataManager.mythicMobsDisguiseMap[mythicMob?.internalName]
                                                     DisguiseAPI.disguiseEntity(entity, disguise)
                                                     return
                                                 }
@@ -43,7 +44,8 @@ class PacketsListener(val plugin: Skinner, val dataManager: DataManager, val pro
                                             if (dataManager.citizens) {
                                                 if (CitizensAPI.getNPCRegistry().isNPC(entity)) {
                                                     if (dataManager.citizensDisguiseMap.containsKey(entity.customName)) {
-                                                        val disguise = dataManager.citizensDisguiseMap[entity.customName]
+                                                        val disguise =
+                                                            dataManager.citizensDisguiseMap[entity.customName]
                                                         DisguiseAPI.disguiseEntity(entity, disguise)
                                                         return
                                                     }

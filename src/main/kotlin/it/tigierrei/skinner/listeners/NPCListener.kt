@@ -11,15 +11,18 @@ import org.bukkit.event.Listener
 class NPCListener(private val pl: Skinner) : Listener {
 
     @EventHandler
-    fun onNpcSpawn(event: NPCSpawnEvent){
+    fun onNpcSpawn(event: NPCSpawnEvent) {
         val npc = event.npc
         //Npc of player type is bugged
-        if (npc.entity != null && npc.entity.type != EntityType.PLAYER && pl.dataManager.citizensDisguiseMap.containsKey(npc.name)) {
+        if (npc.entity != null && npc.entity.type != EntityType.PLAYER && pl.dataManager.citizensDisguiseMap.containsKey(
+                npc.name
+            )
+        ) {
             val disguise = pl.dataManager.citizensDisguiseMap[npc.name]
             if (disguise != null) {
                 Bukkit.getScheduler().runTaskLater(pl, Runnable {
-                    DisguiseAPI.disguiseToAll(npc.entity,disguise)
-                },1L)
+                    DisguiseAPI.disguiseToAll(npc.entity, disguise)
+                }, 1L)
                 return
             }
         }

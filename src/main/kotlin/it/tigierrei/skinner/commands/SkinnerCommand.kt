@@ -1,13 +1,11 @@
 package it.tigierrei.skinner.commands
 
-import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import it.tigierrei.configapi.ConfigFile
 import it.tigierrei.skinner.Skinner
 import me.libraryaddict.disguise.DisguiseAPI
 import me.libraryaddict.disguise.LibsDisguises
-import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -16,7 +14,6 @@ import org.bukkit.entity.Player
 import org.mineskin.SkinOptions
 import org.mineskin.data.SkinCallback
 import java.io.File
-import java.io.FileWriter
 import java.io.IOException
 import java.net.MalformedURLException
 import java.util.*
@@ -26,8 +23,8 @@ import java.util.logging.Level
 class SkinnerCommand(val pl: Skinner) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         //HELP
-        if(args.isEmpty() || (args.isNotEmpty() && args[0].equals("help",ignoreCase = true))){
-            if(!sender.hasPermission("skinner.help")){
+        if (args.isEmpty() || (args.isNotEmpty() && args[0].equals("help", ignoreCase = true))) {
+            if (!sender.hasPermission("skinner.help")) {
                 sender.sendMessage("${ChatColor.RED}You don't have the permission to use that command!")
                 return true
             }
@@ -37,8 +34,8 @@ class SkinnerCommand(val pl: Skinner) : CommandExecutor {
             return true
         }
         //RELOAD
-        if(args[0].equals("reload",ignoreCase = true)){
-            if(!sender.hasPermission("skinner.reload")){
+        if (args[0].equals("reload", ignoreCase = true)) {
+            if (!sender.hasPermission("skinner.reload")) {
                 sender.sendMessage("${ChatColor.RED}You don't have the permission to use that command!")
                 return true
             }
@@ -47,27 +44,27 @@ class SkinnerCommand(val pl: Skinner) : CommandExecutor {
             return true
         }
         //SKIN
-        if(args[0].equals("skin",ignoreCase = true)){
-            if(!sender.hasPermission("skin")){
+        if (args[0].equals("skin", ignoreCase = true)) {
+            if (!sender.hasPermission("skin")) {
                 sender.sendMessage("${ChatColor.RED}You don't have the permission to use that command!")
                 return true
             }
-            if(args.size < 2){
+            if (args.size < 2) {
                 sender.sendMessage("${ChatColor.RED}You must pass more arguments!Type /sk help for the list of commands")
                 return true
             }
             val disguise = DisguiseAPI.getCustomDisguise(args[1])
-            if(disguise != null){
-                DisguiseAPI.disguiseToAll((sender as Player),disguise)
+            if (disguise != null) {
+                DisguiseAPI.disguiseToAll((sender as Player), disguise)
                 sender.sendMessage("${ChatColor.GREEN}Your skin has been changed!")
-            }else{
+            } else {
                 sender.sendMessage("${ChatColor.RED}That skin does not exist!")
             }
             return true
         }
         //sk uploadByFile fileName disguiseName <displayName>
-        if(args[0].equals("uploadByFile",ignoreCase = true)){
-            if(!sender.hasPermission("uploadByFile")){
+        if (args[0].equals("uploadByFile", ignoreCase = true)) {
+            if (!sender.hasPermission("uploadByFile")) {
                 sender.sendMessage("${ChatColor.RED}You don't have the permission to use that command!")
                 return true
             }
@@ -79,8 +76,8 @@ class SkinnerCommand(val pl: Skinner) : CommandExecutor {
             return true
         }
         //sk uploadByUrl url disguiseName <displayName>
-        if(args[0].equals("uploadByUrl",ignoreCase = true)){
-            if(!sender.hasPermission("uploadByUrl")){
+        if (args[0].equals("uploadByUrl", ignoreCase = true)) {
+            if (!sender.hasPermission("uploadByUrl")) {
                 sender.sendMessage("${ChatColor.RED}You don't have the permission to use that command!")
                 return true
             }
@@ -92,8 +89,8 @@ class SkinnerCommand(val pl: Skinner) : CommandExecutor {
             return true
         }
         //sk uploadByUsername username disguiseName <displayName>
-        if(args[0].equals("uploadByUsername",ignoreCase = true)){
-            if(!sender.hasPermission("uploadByUsername")){
+        if (args[0].equals("uploadByUsername", ignoreCase = true)) {
+            if (!sender.hasPermission("uploadByUsername")) {
                 sender.sendMessage("${ChatColor.RED}You don't have the permission to use that command!")
                 return true
             }
@@ -102,7 +99,7 @@ class SkinnerCommand(val pl: Skinner) : CommandExecutor {
                 return true
             }
             val player = pl.server.getOfflinePlayer(args[1])
-            if (player == null){
+            if (player == null) {
                 sender.sendMessage("${ChatColor.RED}The specified player never joined the server and we can't retrieve his UUID.")
                 sender.sendMessage("${ChatColor.RED}If you are sure that the player joined before, please check if you spelled his name right.")
                 sender.sendMessage("${ChatColor.RED}Otherwise you can manually retrieve his UUID at the following link:")
@@ -114,8 +111,8 @@ class SkinnerCommand(val pl: Skinner) : CommandExecutor {
             return true
         }
         //sk uploadByUUID UUID disguiseName <displayName>
-        if(args[0].equals("uploadByUUID",ignoreCase = true)){
-            if(!sender.hasPermission("uploadByUUID")){
+        if (args[0].equals("uploadByUUID", ignoreCase = true)) {
+            if (!sender.hasPermission("uploadByUUID")) {
                 sender.sendMessage("${ChatColor.RED}You don't have the permission to use that command!")
                 return true
             }
@@ -163,8 +160,12 @@ class SkinnerCommand(val pl: Skinner) : CommandExecutor {
 
                     jsonObject.add("properties", propertiesArray)
 
-                    val disguise = ConfigFile("${pl.dataFolder.parentFile.path}/LibsDisguises/disguises.yml",false)
-                    disguise.getSection("Disguises").set(disguiseName,"player ${displayName ?: "\"\""} setSkin {\"id\":\"a149f81bf7844f8987c554afdd4db533\",\"name\":\"libraryaddict\",\"properties\":[{\"signature\":\"${skin?.data?.texture?.signature}\",\"name\":\"textures\",\"value\":\"${skin?.data?.texture?.value}\"}]}")
+                    val disguise = ConfigFile("${pl.dataFolder.parentFile.path}/LibsDisguises/disguises.yml", false)
+                    disguise.getSection("Disguises").set(
+                        disguiseName,
+                        "player ${displayName
+                            ?: "\"\""} setSkin {\"id\":\"a149f81bf7844f8987c554afdd4db533\",\"name\":\"libraryaddict\",\"properties\":[{\"signature\":\"${skin?.data?.texture?.signature}\",\"name\":\"textures\",\"value\":\"${skin?.data?.texture?.value}\"}]}"
+                    )
                     disguise.save()
                     LibsDisguises.getInstance().reloadConfig()
                 }
@@ -202,7 +203,7 @@ class SkinnerCommand(val pl: Skinner) : CommandExecutor {
 
     }
 
-    private fun uploadFromUrl(url: String, sender: CommandSender, disguiseName: String, displayName: String?){
+    private fun uploadFromUrl(url: String, sender: CommandSender, disguiseName: String, displayName: String?) {
         try {
             pl.mineskinClient.generateUrl(url, SkinOptions.name(disguiseName), object : SkinCallback {
                 override fun done(skin: org.mineskin.data.Skin?) {
@@ -250,12 +251,12 @@ class SkinnerCommand(val pl: Skinner) : CommandExecutor {
                     pl.logger.log(Level.WARNING, "Exception while generating skin", exception)
                 }
             })
-        }catch (e: Exception){
+        } catch (e: Exception) {
             sender.sendMessage("${ChatColor.RED}Something went wrong during the upload by URL")
         }
     }
 
-    private fun uploadFromUUID(uuid: UUID, sender: CommandSender, disguiseName: String, displayName: String?){
+    private fun uploadFromUUID(uuid: UUID, sender: CommandSender, disguiseName: String, displayName: String?) {
         try {
             pl.mineskinClient.generateUser(uuid, SkinOptions.name(disguiseName), object : SkinCallback {
                 override fun done(skin: org.mineskin.data.Skin?) {
@@ -303,15 +304,15 @@ class SkinnerCommand(val pl: Skinner) : CommandExecutor {
                     pl.logger.log(Level.WARNING, "Exception while generating skin", exception)
                 }
             })
-        }catch (e: Exception){
+        } catch (e: Exception) {
             sender.sendMessage("${ChatColor.RED}Something went wrong during the upload by Username/UUID")
         }
     }
 
-    private fun getDisplayName(args:Array<out String>):String{
+    private fun getDisplayName(args: Array<out String>): String {
         var displayName = "\""
-        if(args.size > 3){
-            for(i in 3 until args.size){
+        if (args.size > 3) {
+            for (i in 3 until args.size) {
                 displayName = displayName + " " + args[i];
             }
         }
