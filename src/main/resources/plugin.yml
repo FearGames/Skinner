@@ -1,14 +1,13 @@
 name: Skinner
 main: it.tigierrei.skinner.Skinner
-version: 4.1.0
-softdepend: [MythicMobs,Citizens]
+version: 4.1.1-SNAPSHOT
+softdepend: [MythicMobs, Citizens]
 depend: [LibsDisguises]
 commands:
   skinner:
     description: Use /sk help to see list of commands
     aliases:
       - sk
-      - sk1
 permissions:
   skinner.*:
     children:
