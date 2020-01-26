@@ -1,6 +1,7 @@
 package it.tigierrei.skinner.listeners
 
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent
+import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDespawnEvent
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobSpawnEvent
 import it.tigierrei.skinner.Skinner
 import me.libraryaddict.disguise.DisguiseAPI
@@ -25,8 +26,11 @@ class MythicMobsListener(private val pl: Skinner) : Listener {
 
     @EventHandler
     fun onMythicMobDeath(event: MythicMobDeathEvent) {
-        if (pl.dataManager.mythicMobsAlive.containsKey(event.entity)) {
-            pl.dataManager.mythicMobsAlive.remove(event.entity)
-        }
+        pl.dataManager.mythicMobsAlive.remove(event.entity)
+    }
+
+    @EventHandler
+    fun onMythicMobDespawn(event: MythicMobDespawnEvent) {
+        pl.dataManager.mythicMobsAlive.remove(event.entity)
     }
 }
