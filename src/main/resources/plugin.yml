@@ -1,7 +1,7 @@
 name: Skinner
 main: it.tigierrei.skinner.Skinner
 version: @VERSION@
-api-version: 1.13
+api-version: 1.15
 softdepend: [MythicMobs, Citizens]
 depend: [LibsDisguises]
 commands:

@@ -19,7 +19,6 @@ import java.net.MalformedURLException
 import java.util.*
 import java.util.logging.Level
 
-
 class SkinnerCommand(val pl: Skinner) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         //HELP

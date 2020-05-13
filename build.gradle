@@ -9,7 +9,7 @@ plugins {
 apply plugin: 'maven-publish'
 
 group 'it.tigierrei'
-version '4.1.1-SNAPSHOT'
+version '4.1.2-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
@@ -32,7 +32,7 @@ dependencies {
         exclude group: "com.google.guava"
     }
 
-    compileOnly ("LibsDisguises:LibsDisguises:9.8.2-SNAPSHOT") {
+    compileOnly ("LibsDisguises:LibsDisguises:10.0.8-SNAPSHOT") {
         exclude group: "com.comphenix.protocol"
         exclude group: "org.spigotmc"
     }
@@ -40,9 +40,9 @@ dependencies {
         exclude group: "com.comphenix.executors"
         exclude group: "cglib"
     }
-    compileOnly "io.lumine.xikage:MythicMobs:4.9.0-SNAPSHOT"
-    compileOnly "org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT"
-    compileOnly "org.spigotmc:spigot:1.13.2-R0.1-SNAPSHOT"
+    compileOnly "io.lumine.xikage:MythicMobs:4.9.2-SNAPSHOT"
+    compileOnly "org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT"
+    compileOnly "org.spigotmc:spigot:1.15.2-R0.1-SNAPSHOT"
     compileOnly ("net.citizensnpcs:citizensapi:2.0.26-SNAPSHOT") {
         exclude group: "ch.ethz.globis.phtree"
     }
